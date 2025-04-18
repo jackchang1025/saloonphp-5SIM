@@ -4,6 +4,9 @@ namespace Weijiajia\Saloonphp\FiveSim\Requests\Products;
 
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
+use Weijiajia\Saloonphp\FiveSim\Enums\Operator;
+use Weijiajia\Saloonphp\FiveSim\Data\Products\ProductsData;
+use Saloon\Http\Response;
 
 /**
  * 获取产品列表的请求
@@ -19,8 +22,9 @@ class GetProducts extends Request
      * 构造函数
      */
     public function __construct(
-        protected string $country,
-        protected string $product
+        protected string $country = Operator::ANY_OPERATOR->value,
+        protected string $operator = Operator::ANY_OPERATOR->value,
+        protected string $product = Operator::ANY_OPERATOR->value,
     ) {
     }
 
@@ -29,6 +33,11 @@ class GetProducts extends Request
      */
     public function resolveEndpoint(): string
     {
-        return sprintf('/guest/products/%s/%s', $this->country, $this->product);
+        return sprintf('/guest/products/%s/%s/%s', $this->country, $this->operator, $this->product);
+    }
+
+    public function createDtoFromResponse(Response $response): ProductsData
+    {
+        return ProductsData::fromResponse($response->json());
     }
 } 

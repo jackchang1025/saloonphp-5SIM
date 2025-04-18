@@ -20,6 +20,7 @@ use Weijiajia\Saloonphp\FiveSim\Requests\Countries\Countries;
 use Weijiajia\Saloonphp\FiveSim\Requests\Purchase\BuyMultipleNumbers;
 use Weijiajia\Saloonphp\FiveSim\Requests\Purchase\BuySpecificNumber;
 use Weijiajia\Saloonphp\FiveSim\Data\CheckOrder\OrderData;
+use Weijiajia\Saloonphp\FiveSim\Data\Products\ProductsData;
 /**
  * 5SIM API 客户端主类
  */
@@ -111,9 +112,9 @@ class Resource
     /**
      * 获取产品列表
      */
-    public function productRequests(string $country, string $product)
+    public function productRequests(string $country, string $operator, string $product):ProductsData
     {
-        return $this->connector->send(new GetProducts($country, $product));
+        return $this->connector->send(new GetProducts($country, $operator, $product))->dto();
     }
 
     /**
