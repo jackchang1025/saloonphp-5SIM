@@ -6,10 +6,14 @@ use Saloon\Http\Auth\TokenAuthenticator;
 use Saloon\Http\Connector;
 use Saloon\Traits\Plugins\AcceptsJson;
 use Saloon\Traits\Plugins\AlwaysThrowOnErrors;
-class FiveSimConnector extends Connector
+use Weijiajia\SaloonphpLogsPlugin\Contracts\HasLoggerInterface;
+use Weijiajia\SaloonphpLogsPlugin\HasLogger;
+
+class FiveSimConnector extends Connector implements HasLoggerInterface
 {
     use AcceptsJson;
     use AlwaysThrowOnErrors;
+    use HasLogger;
 
     /**
      * 5SIM API 的基本 URL

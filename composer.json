@@ -9,7 +9,8 @@
     },
     "require": {
         "php": "^8.0",
-        "saloonphp/saloon": "^3.0"
+        "saloonphp/saloon": "^3.0",
+        "weijiajia/saloonphp-logs-plugin": "dev-main"
         
     },
     "require-dev": {
