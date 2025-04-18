@@ -1,0 +1,32 @@
+{
+    "name": "weijiajia/saloonphp-5sim",
+    "description": "5SIM API client for SaloonPHP",
+    "type": "library",
+    "autoload": {
+        "psr-4": {
+            "Weijiajia\\Saloonphp\\FiveSim\\": "src/"
+        }
+    },
+    "require": {
+        "php": "^8.0",
+        "saloonphp/saloon": "^3.0"
+        
+    },
+    "require-dev": {
+        "pestphp/pest": "3.x-dev",
+        "symfony/var-dumper": "7.3.x-dev"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "weijiajia",
+            "email": "your-email@example.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "config": {
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    }
+}
