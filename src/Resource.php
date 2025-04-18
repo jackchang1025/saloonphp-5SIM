@@ -19,6 +19,7 @@ use Weijiajia\Saloonphp\FiveSim\Requests\User\GetBalance;
 use Weijiajia\Saloonphp\FiveSim\Requests\Countries\Countries;
 use Weijiajia\Saloonphp\FiveSim\Requests\Purchase\BuyMultipleNumbers;
 use Weijiajia\Saloonphp\FiveSim\Requests\Purchase\BuySpecificNumber;
+use Weijiajia\Saloonphp\FiveSim\Data\CheckOrder\OrderData;
 /**
  * 5SIM API 客户端主类
  */
@@ -70,9 +71,9 @@ class Resource
     /**
      * 检查订单状态
      */
-    public function checkOrder(string $orderId)
+    public function checkOrder(string $orderId): OrderData
     {
-        return $this->connector->send(new CheckOrder($orderId));
+        return $this->connector->send(new CheckOrder($orderId))->dto();
     }
 
     /**

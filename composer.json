@@ -10,7 +10,9 @@
     "require": {
         "php": "^8.0",
         "saloonphp/saloon": "^3.0",
-        "weijiajia/saloonphp-logs-plugin": "dev-main"
+        "weijiajia/saloonphp-logs-plugin": "dev-main",
+        "spatie/laravel-data": "dev-main",
+        "nesbot/carbon": "^3.0@dev"
         
     },
     "require-dev": {

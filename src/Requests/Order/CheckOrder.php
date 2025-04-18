@@ -4,6 +4,8 @@ namespace Weijiajia\Saloonphp\FiveSim\Requests\Order;
 
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
+use Saloon\Http\Response;
+use Weijiajia\Saloonphp\FiveSim\Data\CheckOrder\OrderData;
 
 /**
  * 检查订单状态的请求
@@ -29,5 +31,10 @@ class CheckOrder extends Request
     public function resolveEndpoint(): string
     {
         return sprintf('/user/check/%s', $this->orderId);
+    }
+
+    public function createDtoFromResponse(Response $response): OrderData
+    {
+        return OrderData::from($response->json());
     }
 } 
