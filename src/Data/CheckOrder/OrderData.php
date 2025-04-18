@@ -60,7 +60,7 @@ class OrderData extends Data
      */
     public function getLatestSms(): ?SmsMessageData
     {
-        if ($this->sms?->isEmpty()) {
+        if ($this->sms?->toCollection()->isEmpty()) {
             return null;
         }
         
@@ -68,7 +68,7 @@ class OrderData extends Data
         $sortedSms = clone $this->sms;
         
         // 按时间排序并返回最新消息
-        return $sortedSms->sortByDesc(fn(SmsMessageData $sms) => $sms->date)->first();
+        return $sortedSms->toCollection()->sortByDesc(fn(SmsMessageData $sms) => $sms->date)->first();
     }
     
     /**
