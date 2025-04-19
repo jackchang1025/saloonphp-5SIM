@@ -21,6 +21,8 @@ use Weijiajia\Saloonphp\FiveSim\Requests\Purchase\BuyMultipleNumbers;
 use Weijiajia\Saloonphp\FiveSim\Requests\Purchase\BuySpecificNumber;
 use Weijiajia\Saloonphp\FiveSim\Data\CheckOrder\OrderData;
 use Weijiajia\Saloonphp\FiveSim\Data\Products\ProductsData;
+use Weijiajia\Saloonphp\FiveSim\Exception\BuyNumberException;
+use Saloon\Http\Response;
 /**
  * 5SIM API 客户端主类
  */
@@ -40,7 +42,7 @@ class Resource
     /**
      * 获取用户余额
      */
-    public function getBalance()
+    public function getBalance():Response
     {
         return $this->connector->send(new GetBalance());
     }
@@ -48,15 +50,21 @@ class Resource
     /**
      * 购买激活号码
      */
-    public function buyNumber(string $country, string $operator, string $product)
+    public function buyNumber(string $country, string $operator, string $product):Response
     {
-        return $this->connector->send(new BuyNumber($country, $operator, $product));
+        $response = $this->connector->send(new BuyNumber($country, $operator, $product));
+
+        if ($response->body() !== 'no free phones') {
+            throw new BuyNumberException($response->body());
+        }
+
+        return $response;
     }
 
     /**
      * 购买托管号码
      */
-    public function buyHostingNumber(string $country, string $operator, string $product)
+    public function buyHostingNumber(string $country, string $operator, string $product):Response
     {
         return $this->connector->send(new BuyHostingNumber($country, $operator, $product));
     }
@@ -64,7 +72,7 @@ class Resource
     /**
      * 重新购买号码
      */
-    public function rebuyNumber(string $product, string $phone)
+    public function rebuyNumber(string $product, string $phone):Response
     {
         return $this->connector->send(new RebuyNumber($product, $phone));
     }
@@ -80,7 +88,7 @@ class Resource
     /**
      * 完成订单
      */
-    public function finishOrder(string $orderId)
+    public function finishOrder(string $orderId):Response
     {
         return $this->connector->send(new FinishOrder($orderId));
     }
@@ -88,7 +96,7 @@ class Resource
     /**
      * 取消订单
      */
-    public function cancelOrder(string $orderId)
+    public function cancelOrder(string $orderId):Response
     {
         return $this->connector->send(new CancelOrder($orderId));
     }
@@ -96,7 +104,7 @@ class Resource
     /**
      * 封禁订单
      */
-    public function banOrder(string $orderId)
+    public function banOrder(string $orderId):Response
     {
         return $this->connector->send(new BanOrder($orderId));
     }
@@ -104,7 +112,7 @@ class Resource
     /**
      * 获取短信收件箱列表
      */
-    public function smsInboxList(string $orderId)
+    public function smsInboxList(string $orderId):Response
     {
         return $this->connector->send(new SmsInboxList($orderId));
     }
@@ -120,7 +128,7 @@ class Resource
     /**
      * 获取价格列表
      */
-    public function priceRequests()
+    public function priceRequests():Response
     {
         return $this->connector->send(new GetPrices());
     }
@@ -128,7 +136,7 @@ class Resource
     /**
      * 按国家获取价格列表
      */
-    public function priceRequestsByCountry(string $country)
+    public function priceRequestsByCountry(string $country):Response
     {
         return $this->connector->send(new GetPricesByCountry($country));
     }
@@ -136,7 +144,7 @@ class Resource
     /**
      * 按产品获取价格列表
      */
-    public function priceRequestsByProduct(string $product)
+    public function priceRequestsByProduct(string $product):Response
     {
         return $this->connector->send(new GetPricesByProduct($product));
     }
@@ -144,7 +152,7 @@ class Resource
     /**
      * 按国家和产品获取价格列表
      */
-    public function priceRequestsByCountryAndProduct(string $country, string $product)
+    public function priceRequestsByCountryAndProduct(string $country, string $product):Response
     {
         return $this->connector->send(new GetPricesByCountryAndProduct($country, $product));
     }
@@ -152,7 +160,7 @@ class Resource
     /**
      * 获取国家列表
      */
-    public function countries()
+    public function countries():Response
     {
         return $this->connector->send(new Countries());
     }
@@ -160,7 +168,7 @@ class Resource
     /**
      * 批量购买激活号码
      */
-    public function buyMultipleNumbers(string $country, string $operator, string $product, int $quantity)
+    public function buyMultipleNumbers(string $country, string $operator, string $product, int $quantity):Response
     {
         return $this->connector->send(new BuyMultipleNumbers($country, $operator, $product, $quantity));
     }
@@ -168,7 +176,7 @@ class Resource
     /**
      * 购买指定号码
      */
-    public function buySpecificNumber(string $country, string $operator, string $product, string $phone)
+    public function buySpecificNumber(string $country, string $operator, string $product, string $phone):Response
     {
         return $this->connector->send(new BuySpecificNumber($country, $operator, $product, $phone));
     }
