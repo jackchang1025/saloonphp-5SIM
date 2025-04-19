@@ -54,7 +54,7 @@ class Resource
     {
         $response = $this->connector->send(new BuyNumber($country, $operator, $product));
 
-        if ($response->body() !== 'no free phones') {
+        if ($response->body() === 'no free phones') {
             throw new BuyNumberException($response->body());
         }
 
